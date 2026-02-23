@@ -1,0 +1,490 @@
+<!doctype html> 
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mantenimiento Preventivo Semanal</title>
+
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --brand:#22698d;   /* tu azul */
+      --line:#e5e7eb;
+      --shadow:0 12px 30px rgba(15,23,42,.10);
+      --radius:16px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 0%, rgba(34,105,141,.12), transparent 55%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(99,102,241,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    /* Header */
+    .top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+    h1{
+      margin:0;
+      font-size: 1.6rem;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* Card */
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Controls */
+    .controls{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      padding: 16px 16px 12px;
+      border-bottom:1px solid var(--line);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    label{
+      font-size:.95rem;
+      color:var(--muted);
+    }
+
+    select{
+      appearance:none;
+      border:1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      min-width: 110px;
+      font-weight: 600;
+      color: var(--text);
+      outline:none;
+    }
+    select:focus{
+      border-color: rgba(34,105,141,.55);
+      box-shadow: 0 0 0 4px rgba(34,105,141,.12);
+    }
+
+    .btn{
+      border:none;
+      background: var(--brand);
+      color:#fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .06s ease, opacity .15s ease;
+    }
+    .btn:hover{ opacity:.94; }
+    .btn:active{ transform: translateY(1px); }
+    .btn.secondary{
+      background: transparent;
+      color: var(--brand);
+      border:1px solid rgba(34,105,141,.35);
+    }
+
+    /* Meta strip */
+    .meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      padding: 10px 16px;
+      color: var(--muted);
+      font-size: .92rem;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(to bottom, rgba(34,105,141,.06), transparent);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(34,105,141,.18);
+      background: rgba(34,105,141,.07);
+      color: #0f3a4f;
+      font-weight: 700;
+      font-size: .85rem;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(34,105,141,.15);
+    }
+
+    /* Table */
+    .table-wrap{
+      overflow:auto;
+    }
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 780px; /* sube un poco por la columna acciones */
+    }
+    thead th{
+      position: sticky;
+      top: 0;
+      background:#fbfcfe;
+      z-index: 1;
+      text-align:left;
+      font-size:.86rem;
+      letter-spacing:.25px;
+      color:#374151;
+      border-bottom:1px solid var(--line);
+      padding: 12px 14px;
+      white-space: nowrap;
+    }
+    tbody td{
+      padding: 12px 14px;
+      border-bottom:1px solid var(--line);
+      vertical-align: top;
+    }
+    tbody tr:hover{
+      background: rgba(34,105,141,.05);
+    }
+    .area{
+      font-weight: 800;
+      letter-spacing:.2px;
+      color:#0f3a4f;
+      white-space: nowrap;
+    }
+    .freq{
+      font-weight: 800;
+      text-align:center;
+      width: 190px;
+      white-space: nowrap;
+    }
+    .empty{
+      color: var(--muted);
+      padding: 18px 14px;
+    }
+
+    /* Botón imprimir dentro de tabla */
+    .actions{
+      text-align:right;
+      width: 160px;
+      white-space: nowrap;
+    }
+    .btn-print{
+      border:1px solid rgba(34,105,141,.28);
+      background:#fff;
+      color:#0f3a4f;
+      padding:8px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform .06s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .btn-print:hover{
+      background: rgba(34,105,141,.06);
+      box-shadow: 0 10px 24px rgba(15,23,42,.10);
+    }
+    .btn-print:active{ transform: translateY(1px); }
+
+    /* Footer note */
+    .foot{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* Small screens */
+    @media (max-width: 520px){
+      h1{ font-size: 1.35rem; }
+      select{ min-width: 100px; }
+      .wrap{ padding: 20px 14px 32px; }
+      table{ min-width: 720px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Mantenimiento Preventivo — Programa Semanal</h1>
+        <p class="sub">Consulta qué equipos corresponden por semana (52 semanas).</p>
+      </div>
+      <div class="pill" id="statusPill" title="Estado">
+        <span class="dot" id="statusDot"></span>
+        <span id="statusText">Listo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="controls">
+        <div class="row">
+          <label for="week"><b>Semana</b></label>
+          <select id="week"></select>
+
+          <button class="btn" id="load">Cargar</button>
+          <button class="btn secondary" id="thisWeek" title="Ir a semana actual">Semana actual</button>
+        </div>
+
+        <div class="row">
+          <button class="btn secondary" id="prev">◀</button>
+          <button class="btn secondary" id="next">▶</button>
+        </div>
+      </div>
+
+      <div class="meta" id="meta">
+        Selecciona una semana y carga.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:220px;">Área</th>
+              <th>Equipo</th>
+              <th style="width:190px; text-align:center;">Frecuencia (semanas)</th>
+              <th style="width:160px; text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td class="empty" colspan="4">Selecciona una semana y carga.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="foot"></div>
+  </div>
+
+<script>
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby71IQcSDrbHQQaoywHA7gKbOdOC0TVreoQwLCz1sxyOsmDTDAfH5m7BlbPJouzIf3J/exec";
+
+  /**
+   * ✅ CAMBIA ESTO:
+   * Debe quedar algo así:
+   * const PDF_BASE = "https://TU_USUARIO.github.io/guias-mantenimiento/guias/";
+   * (NOTA: termina con /guias/)
+   */
+  const PDF_BASE = "https://TU_USUARIO.github.io/TU_REPO/guias/";
+
+  const weekSel = document.getElementById("week");
+  const meta = document.getElementById("meta");
+  const tbody = document.getElementById("tbody");
+  const statusText = document.getElementById("statusText");
+  const statusDot = document.getElementById("statusDot");
+
+  // semanas 1..52
+  for (let i = 1; i <= 52; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = i;
+    weekSel.appendChild(opt);
+  }
+
+  // Botones
+  document.getElementById("load").addEventListener("click", cargar);
+  document.getElementById("prev").addEventListener("click", () => step(-1));
+  document.getElementById("next").addEventListener("click", () => step(+1));
+  document.getElementById("thisWeek").addEventListener("click", () => {
+    weekSel.value = getISOWeek(new Date());
+    cargar();
+  });
+
+  // Carga inicial: semana actual
+  weekSel.value = getISOWeek(new Date());
+  cargar();
+
+  function step(delta){
+    let v = parseInt(weekSel.value, 10) || 1;
+    v = Math.min(52, Math.max(1, v + delta));
+    weekSel.value = v;
+    cargar();
+  }
+
+  function setStatus(kind, text){
+    statusText.textContent = text;
+    if (kind === "ok") statusDot.style.background = "#22698d";
+    if (kind === "loading") statusDot.style.background = "#f59e0b";
+    if (kind === "error") statusDot.style.background = "#ef4444";
+  }
+
+  async function cargar() {
+    const w = weekSel.value;
+    const url = `${WEB_APP_URL}?week=${encodeURIComponent(w)}`;
+
+    setStatus("loading", "Cargando…");
+    meta.textContent = "Cargando…";
+    tbody.innerHTML = `<tr><td class="empty" colspan="4">Cargando…</td></tr>`;
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.error) {
+        setStatus("error", "Error");
+        meta.textContent = data.error;
+        tbody.innerHTML = `<tr><td class="empty" colspan="4">${escapeHtml(data.error)}</td></tr>`;
+        return;
+      }
+
+      setStatus("ok", "Listo");
+      meta.textContent = `Semana ${data.week} (${data.inicio} a ${data.fin}) — ${data.total} equipo(s)`;
+
+      if (!data.items || data.items.length === 0) {
+        tbody.innerHTML = `<tr><td class="empty" colspan="4">No hay equipos programados.</td></tr>`;
+        return;
+      }
+
+      // Orden rápido por área y equipo
+      data.items.sort((a,b) => {
+        const A = (a.area||"").localeCompare(b.area||"", "es");
+        if (A !== 0) return A;
+        return (a.equipo||"").localeCompare(b.equipo||"", "es");
+      });
+
+      tbody.innerHTML = data.items.map(it => `
+        <tr>
+          <td class="area">${escapeHtml(it.area)}</td>
+          <td>${escapeHtml(it.equipo)}</td>
+          <td class="freq">${it.frecuencia_semanas}</td>
+          <td class="actions">
+            <button class="btn-print" onclick="printGuideFromGithub('${escapeAttr(it.equipo)}')">
+              🖨️ Imprimir
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+    } catch (err) {
+      setStatus("error", "Error");
+      meta.textContent = "Error cargando datos.";
+      tbody.innerHTML = `<tr><td class="empty" colspan="4">${escapeHtml(String(err))}</td></tr>`;
+    }
+  }
+
+  /** =============================
+   *  IMPRESIÓN DE PDF DESDE GITHUB
+   *  ============================= */
+
+  function normalizeMachineToFile(name){
+    // Convierte "Máquina  1" -> "Maquina 1.pdf"
+    return String(name ?? "")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // fuera acentos
+      .replace(/\s+/g, " ")
+      .trim()
+      + ".pdf";
+  }
+
+  function printGuideFromGithub(machineName){
+    const file = normalizeMachineToFile(machineName);
+    const url = PDF_BASE + encodeURI(file); // espacios -> %20
+    openPrintFrame_(url, machineName);
+  }
+
+  function openPrintFrame_(pdfUrl, title){
+    const w = window.open("", "_blank", "width=1000,height=700");
+    if(!w){
+      alert("Pop-up bloqueado. Permite ventanas emergentes para este sitio.");
+      return;
+    }
+
+    w.document.open();
+    w.document.write(`
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Imprimir - ${escapeHtml(title)}</title>
+  <style>
+    html, body { height:100%; margin:0; }
+    .bar { font-family: system-ui, Arial; padding:10px; border-bottom:1px solid #e5e7eb; display:flex; gap:10px; align-items:center; }
+    .bar b { flex:1; }
+    iframe { width:100%; height:calc(100% - 52px); border:0; }
+    button { padding:8px 10px; border:1px solid #cfd8e3; background:#fff; border-radius:10px; font-weight:700; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <b>${escapeHtml(title)}</b>
+    <button onclick="window.print()">🖨️ Imprimir</button>
+    <button onclick="window.close()">Cerrar</button>
+  </div>
+  <iframe id="pdfFrame" src="${pdfUrl}"></iframe>
+
+  <script>
+    const fr = document.getElementById('pdfFrame');
+    fr.onload = () => {
+      try { fr.contentWindow.focus(); fr.contentWindow.print(); }
+      catch(e){ /* si el navegador bloquea, queda el botón */ }
+    };
+  </script>
+</body>
+</html>
+    `);
+    w.document.close();
+  }
+
+  /** =============================
+   *  UTILIDADES
+   *  ============================= */
+
+  function escapeHtml(s) {
+    s = String(s ?? "");
+    return s.replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+
+  // Para meter texto dentro de onclick='...'
+  function escapeAttr(s){
+    return String(s ?? "")
+      .replaceAll("\\", "\\\\")
+      .replaceAll("'", "\\'")
+      .replaceAll("\n", " ");
+  }
+
+  // ISO week number (1..53). Ajustamos a 52 para tu selector.
+  function getISOWeek(date){
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return Math.min(52, Math.max(1, weekNo));
+  }
+</script>
+</body>
+</html>

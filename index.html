@@ -1,491 +1,539 @@
-<!doctype html> 
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mantenimiento Preventivo Semanal</title>
-
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --brand:#22698d;   /* tu azul */
-      --line:#e5e7eb;
-      --shadow:0 12px 30px rgba(15,23,42,.10);
-      --radius:16px;
-    }
-
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      background: radial-gradient(900px 500px at 10% 0%, rgba(34,105,141,.12), transparent 55%),
-                  radial-gradient(900px 500px at 90% 0%, rgba(99,102,241,.10), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-    }
-
-    .wrap{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 18px 40px;
-    }
-
-    /* Header */
-    .top{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      margin-bottom: 18px;
-    }
-    h1{
-      margin:0;
-      font-size: 1.6rem;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:.95rem;
-    }
-
-    /* Card */
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    /* Controls */
-    .controls{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      padding: 16px 16px 12px;
-      border-bottom:1px solid var(--line);
-    }
-    .row{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
-    label{
-      font-size:.95rem;
-      color:var(--muted);
-    }
-
-    select{
-      appearance:none;
-      border:1px solid var(--line);
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px 12px;
-      min-width: 110px;
-      font-weight: 600;
-      color: var(--text);
-      outline:none;
-    }
-    select:focus{
-      border-color: rgba(34,105,141,.55);
-      box-shadow: 0 0 0 4px rgba(34,105,141,.12);
-    }
-
-    .btn{
-      border:none;
-      background: var(--brand);
-      color:#fff;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor:pointer;
-      transition: transform .06s ease, opacity .15s ease;
-    }
-    .btn:hover{ opacity:.94; }
-    .btn:active{ transform: translateY(1px); }
-    .btn.secondary{
-      background: transparent;
-      color: var(--brand);
-      border:1px solid rgba(34,105,141,.35);
-    }
-
-    /* Meta strip */
-    .meta{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      padding: 10px 16px;
-      color: var(--muted);
-      font-size: .92rem;
-      border-bottom:1px solid var(--line);
-      background: linear-gradient(to bottom, rgba(34,105,141,.06), transparent);
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(34,105,141,.18);
-      background: rgba(34,105,141,.07);
-      color: #0f3a4f;
-      font-weight: 700;
-      font-size: .85rem;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: var(--brand);
-      box-shadow: 0 0 0 4px rgba(34,105,141,.15);
-    }
-
-    /* Table */
-    .table-wrap{
-      overflow:auto;
-    }
-    table{
-      width:100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      min-width: 780px; /* sube un poco por la columna acciones */
-    }
-    thead th{
-      position: sticky;
-      top: 0;
-      background:#fbfcfe;
-      z-index: 1;
-      text-align:left;
-      font-size:.86rem;
-      letter-spacing:.25px;
-      color:#374151;
-      border-bottom:1px solid var(--line);
-      padding: 12px 14px;
-      white-space: nowrap;
-    }
-    tbody td{
-      padding: 12px 14px;
-      border-bottom:1px solid var(--line);
-      vertical-align: top;
-    }
-    tbody tr:hover{
-      background: rgba(34,105,141,.05);
-    }
-    .area{
-      font-weight: 800;
-      letter-spacing:.2px;
-      color:#0f3a4f;
-      white-space: nowrap;
-    }
-    .freq{
-      font-weight: 800;
-      text-align:center;
-      width: 190px;
-      white-space: nowrap;
-    }
-    .empty{
-      color: var(--muted);
-      padding: 18px 14px;
-    }
-
-    /* Botón imprimir dentro de tabla */
-    .actions{
-      text-align:right;
-      width: 160px;
-      white-space: nowrap;
-    }
-    .btn-print{
-      border:1px solid rgba(34,105,141,.28);
-      background:#fff;
-      color:#0f3a4f;
-      padding:8px 10px;
-      border-radius: 12px;
-      font-weight: 800;
-      cursor:pointer;
-      transition: transform .06s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .btn-print:hover{
-      background: rgba(34,105,141,.06);
-      box-shadow: 0 10px 24px rgba(15,23,42,.10);
-    }
-    .btn-print:active{ transform: translateY(1px); }
-
-    /* Footer note */
-    .foot{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: .85rem;
-    }
-
-    /* Small screens */
-    @media (max-width: 520px){
-      h1{ font-size: 1.35rem; }
-      select{ min-width: 100px; }
-      .wrap{ padding: 20px 14px 32px; }
-      table{ min-width: 720px; }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <h1>Mantenimiento Preventivo — Programa Semanal</h1>
-        <p class="sub">Consulta qué equipos corresponden por semana (52 semanas).</p>
-      </div>
-      <div class="pill" id="statusPill" title="Estado">
-        <span class="dot" id="statusDot"></span>
-        <span id="statusText">Listo</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="controls">
-        <div class="row">
-          <label for="week"><b>Semana</b></label>
-          <select id="week"></select>
-
-          <button class="btn" id="load">Cargar</button>
-          <button class="btn secondary" id="thisWeek" title="Ir a semana actual">Semana actual</button>
-        </div>
-
-        <div class="row">
-          <button class="btn secondary" id="prev">◀</button>
-          <button class="btn secondary" id="next">▶</button>
-        </div>
-      </div>
-
-      <div class="meta" id="meta">
-        Selecciona una semana y carga.
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:220px;">Área</th>
-              <th>Equipo</th>
-              <th style="width:190px; text-align:center;">Frecuencia (semanas)</th>
-              <th style="width:160px; text-align:right;">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tbody">
-            <tr><td class="empty" colspan="4">Selecciona una semana y carga.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="foot"></div>
-  </div>
-
-<script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby71IQcSDrbHQQaoywHA7gKbOdOC0TVreoQwLCz1sxyOsmDTDAfH5m7BlbPJouzIf3J/exec";
-
-  /**
-   * ✅ CAMBIA ESTO:
-   * Debe quedar algo así:
-   * const PDF_BASE = "https://albema0922-ai.github.io/guias-mantto/";
-   * (NOTA: termina con /guias/)
-   */
-  const PDF_BASE = "https://albema0922-ai.github.io/guias-mantto/
-
-  const weekSel = document.getElementById("week");
-  const meta = document.getElementById("meta");
-  const tbody = document.getElementById("tbody");
-  const statusText = document.getElementById("statusText");
-  const statusDot = document.getElementById("statusDot");
-
-  // semanas 1..52
-  for (let i = 1; i <= 52; i++) {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = i;
-    weekSel.appendChild(opt);
-  }
-
-  // Botones
-  document.getElementById("load").addEventListener("click", cargar);
-  document.getElementById("prev").addEventListener("click", () => step(-1));
-  document.getElementById("next").addEventListener("click", () => step(+1));
-  document.getElementById("thisWeek").addEventListener("click", () => {
-    weekSel.value = getISOWeek(new Date());
-    cargar();
-  });
-
-  // Carga inicial: semana actual
-  weekSel.value = getISOWeek(new Date());
-  cargar();
-
-  function step(delta){
-    let v = parseInt(weekSel.value, 10) || 1;
-    v = Math.min(52, Math.max(1, v + delta));
-    weekSel.value = v;
-    cargar();
-  }
-
-  function setStatus(kind, text){
-    statusText.textContent = text;
-    if (kind === "ok") statusDot.style.background = "#22698d";
-    if (kind === "loading") statusDot.style.background = "#f59e0b";
-    if (kind === "error") statusDot.style.background = "#ef4444";
-  }
-
-  async function cargar() {
-    const w = weekSel.value;
-    const url = `${WEB_APP_URL}?week=${encodeURIComponent(w)}`;
-
-    setStatus("loading", "Cargando…");
-    meta.textContent = "Cargando…";
-    tbody.innerHTML = `<tr><td class="empty" colspan="4">Cargando…</td></tr>`;
-
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data.error) {
-        setStatus("error", "Error");
-        meta.textContent = data.error;
-        tbody.innerHTML = `<tr><td class="empty" colspan="4">${escapeHtml(data.error)}</td></tr>`;
-        return;
-      }
-
-      setStatus("ok", "Listo");
-      meta.textContent = `Semana ${data.week} (${data.inicio} a ${data.fin}) — ${data.total} equipo(s)`;
-
-      if (!data.items || data.items.length === 0) {
-        tbody.innerHTML = `<tr><td class="empty" colspan="4">No hay equipos programados.</td></tr>`;
-        return;
-      }
-
-      // Orden rápido por área y equipo
-      data.items.sort((a,b) => {
-        const A = (a.area||"").localeCompare(b.area||"", "es");
-        if (A !== 0) return A;
-        return (a.equipo||"").localeCompare(b.equipo||"", "es");
-      });
-
-      tbody.innerHTML = data.items.map(it => `
-        <tr>
-          <td class="area">${escapeHtml(it.area)}</td>
-          <td>${escapeHtml(it.equipo)}</td>
-          <td class="freq">${it.frecuencia_semanas}</td>
-          <td class="actions">
-            <button class="btn-print" onclick="printGuideFromGithub('${escapeAttr(it.equipo)}')">
-              🖨️ Imprimir
-            </button>
-          </td>
-        </tr>
-      `).join("");
-
-    } catch (err) {
-      setStatus("error", "Error");
-      meta.textContent = "Error cargando datos.";
-      tbody.innerHTML = `<tr><td class="empty" colspan="4">${escapeHtml(String(err))}</td></tr>`;
-    }
-  }
-
-  /** =============================
-   *  IMPRESIÓN DE PDF DESDE GITHUB
-   *  ============================= */
-
-  function normalizeMachineToFile(name){
-    // Convierte "Máquina  1" -> "Maquina 1.pdf"
-    return String(name ?? "")
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // fuera acentos
-      .replace(/\s+/g, " ")
-      .trim()
-      + ".pdf";
-  }
-
-  function printGuideFromGithub(machineName){
-    const file = normalizeMachineToFile(machineName);
-    const url = PDF_BASE + encodeURI(file); // espacios -> %20
-    openPrintFrame_(url, machineName);
-  }
-
-  function openPrintFrame_(pdfUrl, title){
-    const w = window.open("", "_blank", "width=1000,height=700");
-    if(!w){
-      alert("Pop-up bloqueado. Permite ventanas emergentes para este sitio.");
-      return;
-    }
-
-    w.document.open();
-    w.document.write(`
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Imprimir - ${escapeHtml(title)}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mantenimiento Preventivo | Control Semanal</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    html, body { height:100%; margin:0; }
-    .bar { font-family: system-ui, Arial; padding:10px; border-bottom:1px solid #e5e7eb; display:flex; gap:10px; align-items:center; }
-    .bar b { flex:1; }
-    iframe { width:100%; height:calc(100% - 52px); border:0; }
-    button { padding:8px 10px; border:1px solid #cfd8e3; background:#fff; border-radius:10px; font-weight:700; cursor:pointer; }
+    :root {
+      --navy: #1e293b;
+      --navy-light: #334155;
+      --mint: #0d90a4;
+      --mint-light: #f0fbf1;
+      --bg: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+header {
+      position: relative; /* Necesario para posicionar el logo respecto al header */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo-container img {
+      max-height: 80px; /* Ajusta el tamaño según necesites */
+      width: auto;
+      object-fit: contain;
+    }
+
+    @media print {
+      .logo-container img {
+        display: block !important;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1300px; /* Un poco más ancho para los días */
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h1::before {
+      content: "";
+      width: 8px;
+      height: 32px;
+      background: var(--mint);
+      border-radius: 4px;
+    }
+
+    .badge-status {
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: var(--mint-light);
+      color: var(--mint);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .main-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      padding: 24px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toolbar-row {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 2fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy-light);
+    }
+
+    .multi-select-container {
+      background-color: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      max-height: 110px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .area-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    select, input[type="text"] {
+      height: 44px;
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background-color: #f1f5f9;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .btn {
+      height: 44px;
+      padding: 0 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--navy); color: var(--white); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--navy-light); }
+
+    .info-bar {
+      padding: 12px 24px;
+      background: var(--mint-light);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+    th {
+      background: #f8fafc;
+      padding: 12px 10px;
+      text-align: left;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    td { padding: 12px 10px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    
+    .td-area { font-weight: 600; color: var(--navy); }
+    .freq-pill {
+      background: var(--navy);
+      color: var(--white);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .col-check { width: 60px; text-align: center; }
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #cbd5e1;
+      margin: 0 auto;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .day-active {
+        background-color: #f0f9ff;
+        border: 2px solid var(--mint) !important;
+    }
+
+    .print-footer {
+      display: none;
+      margin-top: 40px;
+      padding: 20px;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      text-align: center;
+    }
+
+    .sig-line {
+      border-top: 1px solid #000;
+      margin-top: 40px;
+      padding-top: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    @media print {
+      body { background: white; }
+      .container { padding: 0; max-width: 100%; }
+      .toolbar, .btn, .badge-status, #btnClearAreas { display: none !important; }
+      .main-card { border: none; box-shadow: none; }
+      .print-footer { display: block; }
+      th { background: #eee !important; color: black; border: 1px solid #000; }
+      td { border: 1px solid #000; }
+      .check-box { border: 1px solid #000 !important; opacity: 1 !important; background: transparent !important; }
+      .freq-pill { border: 1px solid #000; color: black; background: transparent; }
+      .day-active { background: #f0f0f0 !important; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="bar">
-    <b>${escapeHtml(title)}</b>
-    <button onclick="window.print()">🖨️ Imprimir</button>
-    <button onclick="window.close()">Cerrar</button>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Mantenimiento Preventivo</h1> 
+         <p style="color: var(--text-muted); margin: 5px 0 0 18px;">Semana <span id="footerWeek"></p>
+        <p style="color: var(--text-muted); margin: 5px 0 0 18px;">Departamento de Mantenimiento Fxi Cuautitlán</p>
+      </div>
+      
+      <div class="logo-container">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMkAAACQCAMAAAHino+eAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURS1MYjhWbS9XeDRaeEJZbENcc0hjd2F9e1yFSmOIVXylTXWjU5W6Pr7ZJb3WLrzZLKPFPb/PPbbWNL3WNbzZNbXWPb3WOrbaOrzZO7viPcbXLMTbLMTPOMnVPcLVNMPbNcjbMsLUO8HZOsndOsXkK8ngNcDgNsPhOoCnTouySZa7S5CvU4qyUZK6X57CT6PHSKvNRbLLRqbQRLXXS7LTQb3VQrTdRLzcQ7TaS6fFUqncVbLZWLngQ63XaqfZecPcTMHVQsLcQsneQsjhQcPhQwxinRpknTFxmg5spRNvrQ5yrRp1rhJyrg1qvA93vA59vRF2vBJ1shR6th17tRJ8vRp9vCRuoyl0qCNyqTN9ryV9tCt7tCN9vSt9uTZ5sUprh1Bthlx0jmt8i2N4kQt5xA1+ww1+yRB3xxJ+wRl+wxN+yAuBtQ2BvhyDvhOBviWHvy2BvDuGuUaDkkiNuESNvEqRv1KWvn6+qwmDxw2CwxyIyBOBwxyCxBKCyByDyiOFxiqGxiOIxS2JxSWGySmGySWJyyyLyjKGwjOKxTuNxDGNzDmOyy+QzjyXzDSSzjuTzSaH0SWM0iuO0TiP0DKO0S2Q0TmW1zWT0TqW0j2Z1D6c2USPxEOSx06TwUOVzEyWy0Kbz0uazFOayFWbxUOc1Uqe1UOe2Umf2VKe01aiyVyky06o3kah1kuh1kWh2kyi2lqo11Si1Vql01Ol21mm3VWp3Vqr3lyx32CozWGu12Gu32ez12Wz3Wq13Gy53XC73k+p4Fik4FWq4Vyt4V+16F6x4miv4GGv4mOz5Gm25Wa552m65mW26Gm26Ga66Wu86nC+5HG+6me+8WrA5GTD5mPB6m7B7HTC5nrC5XTD7XnG7nbJ7nrJ7nvZ7n7X7m3A8HXG8XnH8HbI8nzM8n7T9X3Z9H7U+n/Z+Z7Wl6PXhaPVl5jWqZXUupLTypLO1Y7T2JHQ15LT2YDK7ojV6IPU7YjO9YHO9IHU9orV9oPZ9oPV+YnW+YTa+4nb/JDd+wAAACx+VAYAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAABcQAAAXEAEYYRHbAAAgwElEQVRoQ+1bDXxbV3Vng7HxG7hNpKgGWrdWacyA0Y6iFTY+FNptMLYaistvG+s2tirIxjXrKCyu7NipFTUoitzGsp8k+pEQWU7xhxJkKyUUaOIYy5+qaevUH01i61nim5HGUvQk9+2ce++TnqQnW45dfv2x/RNL772rq6P/O/eee865571BLIh0U1yIxeLh6YmT3aL4kXK8wpriAEGIzYwOn+oURY0G26SmSIoeEJSUvh9eaVM8wZP3LLCmOHkjaGXv2IRyAPPT43ih3bJHfJtO3iSEp4In/d8U7ZYW/BmsCUC/8JTHabc+AgcqeVOYvLk4qxnftbImfhZfD3A2c0MdHMibFkLw0sPZ2sUaY1W2rOmgKHY5rQ/BodFoFPWyJnFI9DrtD5NDU73x11o8YE0i/LgvsMMaY0LAd9bU5bLTA4Io4UKbPC6OvEtI4AttymmhkGTlQ2p5NQaIz00Nn4KTa2+EF9YioIqFhVAw4HOLW0uRFW2B+07eGbJayFsWVmsJEyXG+ZkQ3ELRhUosvZ608Hycj8djs6HhQK/otJh3Mx3Kv83n4azN/wQH6lJ4YS0L5M3psHwO32V9wlP42mG3NNX8HRzIWqZH4cVpd4gNRiOoXdYyNgS/ymmBo2rU7NZMy/CT0NBODsVq053XquGdtojiIc7BjkTjvcKfwxttOexyytR6bwRJ0Bavq428M6zgC21RUqokZz3I7pOCmw7qJQgvzoRGg8OBgd5eaHmftlynQhUA5H1S7OMwIuL8wszUWHAo4Pf1eLHtFk0ptQAAWZ8EdmHHCnjrLexA3iceT6zSRQbaJxwOx2CYwAiK8fz8zAy5SNFqtaLeRLFMT94A2CfDOwG9wrNToeDJwGnSDDPYYoYRCCNA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">
+      </div>
+      
+      <div id="statusLabel" class="badge-status">Listo</div>
+    </header>
+
+    <div class="main-card">
+      <div class="toolbar">
+        <div class="toolbar-row">
+          <div class="input-group">
+            <label>Semana del Año</label>
+            <select id="weekSelect"></select>
+          </div>
+
+          <div class="input-group">
+            <label>Áreas</label>
+            <div id="areaFilterContainer" class="multi-select-container">
+              <span style="color:var(--text-muted); font-size: 0.8rem;">Cargando áreas...</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Buscador</label>
+            <input type="text" id="searchInput" placeholder="Buscar equipo...">
+          </div>
+          
+          <div class="button-stack" style="display:flex; gap:10px; align-self:end;">
+            <button class="btn btn-primary" id="btnLoad">Cargar</button>
+            <button class="btn btn-outline" id="btnPrint" title="Imprimir">🖨️</button>
+          </div>
+        </div>
+
+        <div class="toolbar-row" style="margin-top: 20px; grid-template-columns: auto auto 1fr;">
+            <div class="button-stack" style="display:flex; gap:10px;">
+               <button class="btn btn-outline" id="btnPrev">Anterior</button>
+               <button class="btn btn-outline" id="btnToday">Hoy</button>
+               <button class="btn btn-outline" id="btnNext">Siguiente</button>
+            </div>
+            <button class="btn btn-outline" id="btnClearAreas" style="font-size: 0.8rem;">Limpiar Filtros</button>
+        </div>
+      </div>
+
+      <div class="info-bar" id="infoBar">
+        <span>Selecciona una semana</span>
+        <span id="countLabel">0 Equipos</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 12%;">Área</th>
+              <th style="width: 25%;">Equipo / Maquinaria</th>
+              <th style="width: 5%; text-align: center;">Period</th>
+              <th class="col-check">LUNES</th>
+              <th class="col-check">MARTES</th>
+              <th class="col-check">MIÉRC.</th>
+              <th class="col-check">JUEVES</th>
+              <th class="col-check">VIERNES</th>
+              <th>Hallazgos / Observaciones</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody">
+            <tr>
+              <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 60px;">
+                Carga los datos para visualizar la programación.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="print-footer">
+        <div class="signature-grid">
+          <div>
+            <div class="sig-line">Firma de Gerente de Área</div>
+          </div>
+          <div>
+            <div class="sig-line">Firma del Supervisor de Mantenimiento</div>
+          </div>
+        </div>
+        
+        </p>
+      </div>
+    </div>
   </div>
-  <iframe id="pdfFrame" src="${pdfUrl}"></iframe>
 
-  <script>
-    const fr = document.getElementById('pdfFrame');
-    fr.onload = () => {
-      try { fr.contentWindow.focus(); fr.contentWindow.print(); }
-      catch(e){ /* si el navegador bloquea, queda el botón */ }
+<script>
+  const APP_URL = "https://script.google.com/macros/s/AKfycby71IQcSDrbHQQaoywHA7gKbOdOC0TVreoQwLCz1sxyOsmDTDAfH5m7BlbPJouzIf3J/exec";
+
+  const weekSelect = document.getElementById("weekSelect");
+  const areaFilterContainer = document.getElementById("areaFilterContainer");
+  const searchInput = document.getElementById("searchInput");
+  const dataTableBody = document.getElementById("dataTableBody");
+  const infoBar = document.getElementById("infoBar");
+  const countLabel = document.getElementById("countLabel");
+  const statusLabel = document.getElementById("statusLabel");
+  const footerWeek = document.getElementById("footerWeek");
+
+  let masterData = [];
+  let fechaInicioSemana = null;
+
+  for (let i = 1; i <= 52; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = "Semana " + i;
+    weekSelect.appendChild(opt);
+  }
+
+  document.getElementById("btnLoad").onclick = fetchData;
+  document.getElementById("btnToday").onclick = () => { weekSelect.value = getISOWeek(new Date()); fetchData(); };
+  document.getElementById("btnPrev").onclick = () => { weekSelect.value = Math.max(1, parseInt(weekSelect.value) - 1); fetchData(); };
+  document.getElementById("btnNext").onclick = () => { weekSelect.value = Math.min(52, parseInt(weekSelect.value) + 1); fetchData(); };
+  document.getElementById("btnPrint").onclick = () => {
+    footerWeek.textContent = weekSelect.value;
+    window.print();
+  };
+  document.getElementById("btnClearAreas").onclick = clearAreaFilters;
+  searchInput.oninput = renderData;
+
+  weekSelect.value = getISOWeek(new Date());
+  fetchData();
+
+async function fetchData() {
+    const w = weekSelect.value;
+    statusLabel.textContent = "Cargando...";
+    statusLabel.style.color = "#f59e0b";
+
+    try {
+        const response = await fetch(`${APP_URL}?week=${w}`);
+        const result = await response.json();
+        masterData = result.items || [];
+        
+        // Limpieza y validación de fecha de inicio
+        if (result.inicio) {
+            let fechaLimpia = result.inicio.replace(/-/g, '/').trim().split(' ')[0];
+            const partes = fechaLimpia.split('/');
+            if (partes.length === 3) {
+                // Soporta DD/MM/YYYY o YYYY/MM/DD
+                fechaInicioSemana = partes[0].length === 4 
+                    ? new Date(partes[0], partes[1] - 1, partes[2])
+                    : new Date(partes[2], partes[1] - 1, partes[0]);
+            }
+        }
+
+        infoBar.firstElementChild.textContent = ` Período: ${result.inicio || ''} al ${result.fin || ''}`;
+        populateAreas();
+        renderData();
+        statusLabel.textContent = "Sistema Listo";
+        statusLabel.style.color = "var(--mint)";
+    } catch (err) {
+        statusLabel.textContent = "Error de Datos";
+        statusLabel.style.color = "#ef4444";
+    }
+}
+
+  function populateAreas() {
+    const currentSelected = Array.from(document.querySelectorAll(".area-checkbox:checked")).map(cb => cb.value);
+    const areas = [...new Set(masterData.map(x => x.area))].sort();
+    areaFilterContainer.innerHTML = "";
+
+    areas.forEach(area => {
+      const label = document.createElement("label");
+      label.className = "area-option";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = area;
+      cb.className = "area-checkbox";
+      if(currentSelected.includes(area)) cb.checked = true;
+      cb.onchange = renderData;
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(area));
+      areaFilterContainer.appendChild(label);
+    });
+  }
+
+  function clearAreaFilters() {
+    document.querySelectorAll(".area-checkbox").forEach(cb => cb.checked = false);
+    renderData();
+  }
+
+  function renderData() {
+    const filterText = searchInput.value.toLowerCase();
+    const selectedAreas = Array.from(document.querySelectorAll(".area-checkbox:checked")).map(cb => cb.value);
+
+    const filtered = masterData.filter(item => {
+        const matchesArea = (selectedAreas.length === 0 || selectedAreas.includes(item.area));
+        const matchesText = item.equipo.toLowerCase().includes(filterText);
+        return matchesArea && matchesText;
+    });
+
+    countLabel.textContent = `${filtered.length} Equipos`;
+
+    if (filtered.length === 0) {
+        dataTableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">No hay registros.</td></tr>`;
+        return;
+    }
+
+    // Función interna para asignar un día fijo basado en el nombre del equipo
+    const getFixedDay = (name) => {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return Math.abs(hash) % 5; // Retorna siempre un número entre 0 y 4
     };
-  </script>
-</body>
-</html>
-    `);
-    w.document.close();
+
+    dataTableBody.innerHTML = filtered.map((item) => {
+        // ASIGNACIÓN AUTOMÁTICA (Lunes a Viernes)
+        const diaIndex = getFixedDay(item.equipo); 
+        
+        let checksHtml = "";
+        let fechaCorta = "";
+
+        // Generar las 5 columnas
+        for(let i=0; i<5; i++) {
+            const esSuDia = (i === diaIndex);
+            checksHtml += `
+                <td class="col-check">
+                    <div class="check-box ${esSuDia ? 'day-active' : ''}" 
+                         style="${esSuDia ? 'background-color: var(--mint);' : 'opacity:0.1'}">
+                    </div>
+                </td>`;
+        }
+
+        // Cálculo de fecha asignada
+        if(fechaInicioSemana && !isNaN(fechaInicioSemana.getTime())) {
+            let d = new Date(fechaInicioSemana);
+            d.setDate(d.getDate() + diaIndex);
+            fechaCorta = `<br><span style="color:var(--mint); font-size:0.7rem; font-weight:600;">Asignado: ${d.getDate()}/${d.getMonth()+1}</span>`;
+        } else {
+            fechaCorta = `<br><span style="color: #ef4444; font-size:0.7rem;">Fecha no disponible</span>`;
+        }
+
+        return `
+            <tr>
+                <td class="td-area">${escapeHtml(item.area)}</td>
+                <td>
+                    <strong>${escapeHtml(item.equipo)}</strong>
+                    ${fechaCorta}
+                </td>
+                <td style="text-align: center;"><span class="freq-pill">${item.frecuencia_semanas}</span></td>
+                ${checksHtml}
+                <td style="border-bottom: 1px solid #eee;"></td>
+            </tr>
+        `;
+    }).join("");
+}
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 
-  /** =============================
-   *  UTILIDADES
-   *  ============================= */
-
-  function escapeHtml(s) {
-    s = String(s ?? "");
-    return s.replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
-  }
-
-  // Para meter texto dentro de onclick='...'
-  function escapeAttr(s){
-    return String(s ?? "")
-      .replaceAll("\\", "\\\\")
-      .replaceAll("'", "\\'")
-      .replaceAll("\n", " ");
-  }
-
-  // ISO week number (1..53). Ajustamos a 52 para tu selector.
-  function getISOWeek(date){
+  function getISOWeek(date) {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    return Math.min(52, Math.max(1, weekNo));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
   }
 </script>
 </body>
 </html>
-

@@ -20,8 +20,8 @@
       --border: #e2e8f0;
       --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
     }
-header {
-      position: relative; /* Necesario para posicionar el logo respecto al header */
+    header {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -29,21 +29,15 @@ header {
       flex-wrap: wrap;
       gap: 20px;
     }
-
     .logo-container img {
-      max-height: 80px; /* Ajusta el tamaño según necesites */
+      max-height: 80px;
       width: auto;
       object-fit: contain;
     }
-
     @media print {
-      .logo-container img {
-        display: block !important;
-        -webkit-print-color-adjust: exact;
-      }
+      .logo-container img { display: block !important; -webkit-print-color-adjust: exact; }
     }
     * { box-sizing: border-box; }
-    
     body {
       margin: 0;
       font-family: 'Inter', system-ui, sans-serif;
@@ -51,203 +45,69 @@ header {
       color: var(--text-main);
       line-height: 1.5;
     }
-
-    .container {
-      max-width: 1300px; /* Un poco más ancho para los días */
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
+    .container { max-width: 1300px; margin: 0 auto; padding: 40px 20px; }
     h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin: 0; font-size: 1.8rem; font-weight: 700; color: var(--navy);
+      display: flex; align-items: center; gap: 10px;
     }
-
-    h1::before {
-      content: "";
-      width: 8px;
-      height: 32px;
-      background: var(--mint);
-      border-radius: 4px;
-    }
-
+    h1::before { content: ""; width: 8px; height: 32px; background: var(--mint); border-radius: 4px; }
     .badge-status {
-      padding: 6px 12px;
-      border-radius: 99px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      background: var(--mint-light);
-      color: var(--mint);
+      padding: 6px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; background: var(--mint-light); color: var(--mint);
       border: 1px solid rgba(16, 185, 129, 0.2);
     }
-
     .main-card {
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      overflow: hidden;
+      background: var(--white); border-radius: 20px; box-shadow: var(--shadow);
+      border: 1px solid var(--border); overflow: hidden;
     }
-
-    .toolbar {
-      padding: 24px;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .toolbar-row {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr 2fr auto;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--navy-light);
-    }
-
+    .toolbar { padding: 24px; background: var(--white); border-bottom: 1px solid var(--border); }
+    .toolbar-row { display: grid; grid-template-columns: 1fr 1.5fr 2fr auto; gap: 20px; align-items: start; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    label { font-size: 0.85rem; font-weight: 600; color: var(--navy-light); }
     .multi-select-container {
-      background-color: #f1f5f9;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px;
-      max-height: 110px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      background-color: #f1f5f9; border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px; max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
     }
-
-    .area-option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
+    .area-option { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; cursor: pointer; }
     select, input[type="text"] {
-      height: 44px;
-      padding: 0 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background-color: #f1f5f9;
-      font-size: 0.95rem;
-      outline: none;
+      height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--border);
+      background-color: #f1f5f9; font-size: 0.95rem; outline: none;
     }
-
     .btn {
-      height: 44px;
-      padding: 0 20px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
+      height: 44px; padding: 0 20px; border-radius: 12px; border: none; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; transition: all 0.2s;
     }
-
     .btn-primary { background: var(--navy); color: var(--white); }
     .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--navy-light); }
-
     .info-bar {
-      padding: 12px 24px;
-      background: var(--mint-light);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      font-weight: 500;
+      padding: 12px 24px; background: var(--mint-light); border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 500;
     }
-
     .table-container { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 1000px; }
     th {
-      background: #f8fafc;
-      padding: 12px 10px;
-      text-align: left;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
+      background: #f8fafc; padding: 12px 10px; text-align: left; font-size: 0.65rem;
+      font-weight: 800; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border);
     }
     td { padding: 12px 10px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
-    
     .td-area { font-weight: 600; color: var(--navy); }
     .freq-pill {
-      background: var(--navy);
-      color: var(--white);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.75rem;
+      background: var(--navy); color: var(--white); padding: 2px 6px;
+      border-radius: 4px; font-weight: 700; font-size: 0.75rem;
     }
-
     .col-check { width: 60px; text-align: center; }
     .check-box {
-      width: 20px;
-      height: 20px;
-      border: 1.5px solid #cbd5e1;
-      margin: 0 auto;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 20px; height: 20px; border: 1.5px solid #cbd5e1; margin: 0 auto;
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
     }
-
-    .day-active {
-        background-color: #f0f9ff;
-        border: 2px solid var(--mint) !important;
-    }
-
-    .print-footer {
-      display: none;
-      margin-top: 40px;
-      padding: 20px;
-    }
-
-    .signature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      text-align: center;
-    }
-
+    .day-active { background-color: #f0f9ff; border: 2px solid var(--mint) !important; }
+    .print-footer { display: none; margin-top: 40px; padding: 20px; }
+    .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; text-align: center; }
     .sig-line {
-      border-top: 1px solid #000;
-      margin-top: 40px;
-      padding-top: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      border-top: 1px solid #000; margin-top: 40px; padding-top: 8px;
+      font-size: 0.85rem; font-weight: 600;
     }
-
     @media print {
       body { background: white; }
       .container { padding: 0; max-width: 100%; }
@@ -267,15 +127,13 @@ header {
   <div class="container">
     <header>
       <div>
-        <h1>Mantenimiento Preventivo</h1> 
-         <p style="color: var(--text-muted); margin: 5px 0 0 18px;">Semana <span id="footerWeek"></p>
+        <h1>Mantenimiento Preventivo</h1>
+        <p style="color: var(--text-muted); margin: 5px 0 0 18px;">Semana <span id="footerWeek"></span></p>
         <p style="color: var(--text-muted); margin: 5px 0 0 18px;">Departamento de Mantenimiento Fxi Cuautitlán</p>
       </div>
-      
       <div class="logo-container">
         <img src="https://images.squarespace-cdn.com/content/v1/620ed8b50c43390f3c3413d1/a1c81e4e-aba8-48b0-adcd-9600d43276da/main_logo_color_footer.png?format=300w">
       </div>
-      
       <div id="statusLabel" class="badge-status">Listo</div>
     </header>
 
@@ -286,32 +144,28 @@ header {
             <label>Semana del Año</label>
             <select id="weekSelect"></select>
           </div>
-
           <div class="input-group">
             <label>Áreas</label>
             <div id="areaFilterContainer" class="multi-select-container">
               <span style="color:var(--text-muted); font-size: 0.8rem;">Cargando áreas...</span>
             </div>
           </div>
-
           <div class="input-group">
             <label>Buscador</label>
             <input type="text" id="searchInput" placeholder="Buscar equipo...">
           </div>
-          
           <div class="button-stack" style="display:flex; gap:10px; align-self:end;">
             <button class="btn btn-primary" id="btnLoad">Cargar</button>
             <button class="btn btn-outline" id="btnPrint" title="Imprimir">🖨️</button>
           </div>
         </div>
-
         <div class="toolbar-row" style="margin-top: 20px; grid-template-columns: auto auto 1fr;">
-            <div class="button-stack" style="display:flex; gap:10px;">
-               <button class="btn btn-outline" id="btnPrev">Anterior</button>
-               <button class="btn btn-outline" id="btnToday">Hoy</button>
-               <button class="btn btn-outline" id="btnNext">Siguiente</button>
-            </div>
-            <button class="btn btn-outline" id="btnClearAreas" style="font-size: 0.8rem;">Limpiar Filtros</button>
+          <div class="button-stack" style="display:flex; gap:10px;">
+            <button class="btn btn-outline" id="btnPrev">Anterior</button>
+            <button class="btn btn-outline" id="btnToday">Hoy</button>
+            <button class="btn btn-outline" id="btnNext">Siguiente</button>
+          </div>
+          <button class="btn btn-outline" id="btnClearAreas" style="font-size: 0.8rem;">Limpiar Filtros</button>
         </div>
       </div>
 
@@ -347,15 +201,9 @@ header {
 
       <div class="print-footer">
         <div class="signature-grid">
-          <div>
-            <div class="sig-line">Firma de Gerente de Área</div>
-          </div>
-          <div>
-            <div class="sig-line">Firma del Supervisor de Mantenimiento</div>
-          </div>
+          <div><div class="sig-line">Firma de Gerente de Área</div></div>
+          <div><div class="sig-line">Firma del Supervisor de Mantenimiento</div></div>
         </div>
-        
-        </p>
       </div>
     </div>
   </div>
@@ -363,89 +211,107 @@ header {
 <script>
   const APP_URL = "https://script.google.com/macros/s/AKfycby71IQcSDrbHQQaoywHA7gKbOdOC0TVreoQwLCz1sxyOsmDTDAfH5m7BlbPJouzIf3J/exec";
 
-  const weekSelect = document.getElementById("weekSelect");
+  const weekSelect    = document.getElementById("weekSelect");
   const areaFilterContainer = document.getElementById("areaFilterContainer");
-  const searchInput = document.getElementById("searchInput");
+  const searchInput   = document.getElementById("searchInput");
   const dataTableBody = document.getElementById("dataTableBody");
-  const infoBar = document.getElementById("infoBar");
-  const countLabel = document.getElementById("countLabel");
-  const statusLabel = document.getElementById("statusLabel");
-  const footerWeek = document.getElementById("footerWeek");
+  const infoBar       = document.getElementById("infoBar");
+  const countLabel    = document.getElementById("countLabel");
+  const statusLabel   = document.getElementById("statusLabel");
+  const footerWeek    = document.getElementById("footerWeek");
 
   let masterData = [];
   let fechaInicioSemana = null;
 
-  for (let i = 1; i <= 52; i++) {
+  // ─────────────────────────────────────────────────────────────────────────
+  // LÓGICA DE NUMERACIÓN
+  //   isoWeek  = número real ISO que se envía al backend (1-52)
+  //   dispWeek = número que ve el usuario = isoWeek - 1  (0-51)
+  //
+  // El select almacena el isoWeek como VALUE, pero muestra dispWeek como TEXT.
+  // Así el backend siempre recibe el número correcto y las fechas no cambian.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  for (let iso = 1; iso <= 52; iso++) {
     const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = "Semana " + i;
+    opt.value = iso;                          // valor interno: ISO real
+    opt.textContent = "Semana " + (iso - 1); // texto visible: ISO - 1
     weekSelect.appendChild(opt);
   }
 
-  document.getElementById("btnLoad").onclick = fetchData;
+  // Helpers
+  const isoToDisplay  = iso  => iso - 1;   // lo que ve el usuario
+  const displayToIso  = disp => disp + 1;  // para convertir si fuera necesario
+
+  document.getElementById("btnLoad").onclick  = fetchData;
   document.getElementById("btnToday").onclick = () => { weekSelect.value = getISOWeek(new Date()); fetchData(); };
-  document.getElementById("btnPrev").onclick = () => { weekSelect.value = Math.max(1, parseInt(weekSelect.value) - 1); fetchData(); };
-  document.getElementById("btnNext").onclick = () => { weekSelect.value = Math.min(52, parseInt(weekSelect.value) + 1); fetchData(); };
+  document.getElementById("btnPrev").onclick  = () => { weekSelect.value = Math.max(1,  parseInt(weekSelect.value) - 1); fetchData(); };
+  document.getElementById("btnNext").onclick  = () => { weekSelect.value = Math.min(52, parseInt(weekSelect.value) + 1); fetchData(); };
   document.getElementById("btnPrint").onclick = () => {
-    footerWeek.textContent = weekSelect.value;
+    // Al imprimir mostramos el número de display (ISO - 1)
+    footerWeek.textContent = isoToDisplay(parseInt(weekSelect.value));
     window.print();
   };
   document.getElementById("btnClearAreas").onclick = clearAreaFilters;
   searchInput.oninput = renderData;
 
+  // Arrancar en la semana actual
   weekSelect.value = getISOWeek(new Date());
   fetchData();
 
-async function fetchData() {
-    const w = weekSelect.value;
+  // ── Actualizar el encabezado "Semana X" cada vez que cambia el select ────
+  weekSelect.addEventListener("change", () => {
+    footerWeek.textContent = isoToDisplay(parseInt(weekSelect.value));
+  });
+
+  async function fetchData() {
+    const isoW = parseInt(weekSelect.value); // número ISO real → va al backend
+    // Actualizar encabezado con número de display
+    footerWeek.textContent = isoToDisplay(isoW);
+
     statusLabel.textContent = "Cargando...";
     statusLabel.style.color = "#f59e0b";
 
     try {
-        const response = await fetch(`${APP_URL}?week=${w}`);
-        const result = await response.json();
-        masterData = result.items || [];
-        
-        // Limpieza y validación de fecha de inicio
-        if (result.inicio) {
-            let fechaLimpia = result.inicio.replace(/-/g, '/').trim().split(' ')[0];
-            const partes = fechaLimpia.split('/');
-            if (partes.length === 3) {
-                // Soporta DD/MM/YYYY o YYYY/MM/DD
-                fechaInicioSemana = partes[0].length === 4 
-                    ? new Date(partes[0], partes[1] - 1, partes[2])
-                    : new Date(partes[2], partes[1] - 1, partes[0]);
-            }
-        }
+      const response = await fetch(`${APP_URL}?week=${isoW}`); // ← siempre ISO real
+      const result   = await response.json();
+      masterData = result.items || [];
 
-        infoBar.firstElementChild.textContent = ` Período: ${result.inicio || ''} al ${result.fin || ''}`;
-        populateAreas();
-        renderData();
-        statusLabel.textContent = "Sistema Listo";
-        statusLabel.style.color = "var(--mint)";
+      if (result.inicio) {
+        let fechaLimpia = result.inicio.replace(/-/g, '/').trim().split(' ')[0];
+        const partes = fechaLimpia.split('/');
+        if (partes.length === 3) {
+          fechaInicioSemana = partes[0].length === 4
+            ? new Date(partes[0], partes[1] - 1, partes[2])
+            : new Date(partes[2], partes[1] - 1, partes[0]);
+        }
+      }
+
+      infoBar.firstElementChild.textContent = ` Período: ${result.inicio || ''} al ${result.fin || ''}`;
+      populateAreas();
+      renderData();
+      statusLabel.textContent = "Sistema Listo";
+      statusLabel.style.color = "var(--mint)";
     } catch (err) {
-        statusLabel.textContent = "Error de Datos";
-        statusLabel.style.color = "#ef4444";
+      statusLabel.textContent = "Error de Datos";
+      statusLabel.style.color = "#ef4444";
     }
-}
+  }
 
   function populateAreas() {
     const currentSelected = Array.from(document.querySelectorAll(".area-checkbox:checked")).map(cb => cb.value);
     const areas = [...new Set(masterData.map(x => x.area))].sort();
     areaFilterContainer.innerHTML = "";
-
     areas.forEach(area => {
-      const label = document.createElement("label");
-      label.className = "area-option";
+      const lbl = document.createElement("label");
+      lbl.className = "area-option";
       const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.value = area;
-      cb.className = "area-checkbox";
-      if(currentSelected.includes(area)) cb.checked = true;
+      cb.type = "checkbox"; cb.value = area; cb.className = "area-checkbox";
+      if (currentSelected.includes(area)) cb.checked = true;
       cb.onchange = renderData;
-      label.appendChild(cb);
-      label.appendChild(document.createTextNode(area));
-      areaFilterContainer.appendChild(label);
+      lbl.appendChild(cb);
+      lbl.appendChild(document.createTextNode(area));
+      areaFilterContainer.appendChild(lbl);
     });
   }
 
@@ -455,72 +321,61 @@ async function fetchData() {
   }
 
   function renderData() {
-    const filterText = searchInput.value.toLowerCase();
+    const filterText   = searchInput.value.toLowerCase();
     const selectedAreas = Array.from(document.querySelectorAll(".area-checkbox:checked")).map(cb => cb.value);
 
     const filtered = masterData.filter(item => {
-        const matchesArea = (selectedAreas.length === 0 || selectedAreas.includes(item.area));
-        const matchesText = item.equipo.toLowerCase().includes(filterText);
-        return matchesArea && matchesText;
+      const matchesArea = selectedAreas.length === 0 || selectedAreas.includes(item.area);
+      const matchesText = item.equipo.toLowerCase().includes(filterText);
+      return matchesArea && matchesText;
     });
 
     countLabel.textContent = `${filtered.length} Equipos`;
 
     if (filtered.length === 0) {
-        dataTableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">No hay registros.</td></tr>`;
-        return;
+      dataTableBody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted);">No hay registros.</td></tr>`;
+      return;
     }
 
-    // Función interna para asignar un día fijo basado en el nombre del equipo
-    const getFixedDay = (name) => {
-        let hash = 0;
-        for (let i = 0; i < name.length; i++) {
-            hash = name.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return Math.abs(hash) % 5; // Retorna siempre un número entre 0 y 4
+    const getFixedDay = name => {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      return Math.abs(hash) % 5;
     };
 
-    dataTableBody.innerHTML = filtered.map((item) => {
-        // ASIGNACIÓN AUTOMÁTICA (Lunes a Viernes)
-        const diaIndex = getFixedDay(item.equipo); 
-        
-        let checksHtml = "";
-        let fechaCorta = "";
+    dataTableBody.innerHTML = filtered.map(item => {
+      const diaIndex = getFixedDay(item.equipo);
+      let checksHtml = "";
+      let fechaCorta = "";
 
-        // Generar las 5 columnas
-        for(let i=0; i<5; i++) {
-            const esSuDia = (i === diaIndex);
-            checksHtml += `
-                <td class="col-check">
-                    <div class="check-box ${esSuDia ? 'day-active' : ''}" 
-                         style="${esSuDia ? 'background-color: var(--mint);' : 'opacity:0.1'}">
-                    </div>
-                </td>`;
-        }
+      for (let i = 0; i < 5; i++) {
+        const esSuDia = i === diaIndex;
+        checksHtml += `
+          <td class="col-check">
+            <div class="check-box ${esSuDia ? 'day-active' : ''}"
+                 style="${esSuDia ? 'background-color:var(--mint);' : 'opacity:0.1'}">
+            </div>
+          </td>`;
+      }
 
-        // Cálculo de fecha asignada
-        if(fechaInicioSemana && !isNaN(fechaInicioSemana.getTime())) {
-            let d = new Date(fechaInicioSemana);
-            d.setDate(d.getDate() + diaIndex);
-            fechaCorta = `<br><span style="color:var(--mint); font-size:0.7rem; font-weight:600;">Asignado: ${d.getDate()}/${d.getMonth()+1}</span>`;
-        } else {
-            fechaCorta = `<br><span style="color: #ef4444; font-size:0.7rem;">Fecha no disponible</span>`;
-        }
+      if (fechaInicioSemana && !isNaN(fechaInicioSemana.getTime())) {
+        let d = new Date(fechaInicioSemana);
+        d.setDate(d.getDate() + diaIndex);
+        fechaCorta = `<br><span style="color:var(--mint);font-size:0.7rem;font-weight:600;">Asignado: ${d.getDate()}/${d.getMonth()+1}</span>`;
+      } else {
+        fechaCorta = `<br><span style="color:#ef4444;font-size:0.7rem;">Fecha no disponible</span>`;
+      }
 
-        return `
-            <tr>
-                <td class="td-area">${escapeHtml(item.area)}</td>
-                <td>
-                    <strong>${escapeHtml(item.equipo)}</strong>
-                    ${fechaCorta}
-                </td>
-                <td style="text-align: center;"><span class="freq-pill">${item.frecuencia_semanas}</span></td>
-                ${checksHtml}
-                <td style="border-bottom: 1px solid #eee;"></td>
-            </tr>
-        `;
+      return `
+        <tr>
+          <td class="td-area">${escapeHtml(item.area)}</td>
+          <td><strong>${escapeHtml(item.equipo)}</strong>${fechaCorta}</td>
+          <td style="text-align:center;"><span class="freq-pill">${item.frecuencia_semanas}</span></td>
+          ${checksHtml}
+          <td style="border-bottom:1px solid #eee;"></td>
+        </tr>`;
     }).join("");
-}
+  }
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -528,13 +383,13 @@ async function fetchData() {
     return div.innerHTML;
   }
 
+  // getISOWeek sin modificar → devuelve el número ISO estándar
   function getISOWeek(date) {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
   }
 </script>
 </body>
 </html>
-
